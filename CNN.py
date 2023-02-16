@@ -7,18 +7,25 @@ import tensorflow.keras as ks
 
 print(train_X[1].shape)
 plt.imshow(train_X[1], cmap = "Greys")
-plt.show()
+#plt.show()
 
 CNN = ks.models.Sequential()
 
-CNN.add(ks.layers.InputLayer((28, 28), 28))
-CNN.add(ks.layers.Dense(15, "relu"))
-CNN.add(ks.layers.Dense(10))
+# convolutional layer
+CNN.add(ks.layers.Conv2D(25, kernel_size=(3,3), strides=(1,1), padding='valid', activation='relu', input_shape=(32, 28,28,1)))
+CNN.add(ks.layers.MaxPool2D(pool_size=(1,1)))
+# flatten output of conv
+CNN.add(ks.layers.Flatten())
+# hidden layer
+CNN.add(ks.layers.Dense(100, activation='relu'))
+# output layer
+CNN.add(ks.layers.Dense(10, activation='softmax'))
 
-CNN.compile(optimizer = "Adam", loss = ks.losses.MeanSquaredError())
 
-CNN.fit(train_X, train_y, batch_size = 28)
+CNN.compile(optimizer = "adam", loss = ks.losses.MeanSquaredError())
 
-loss = CNN.evaluate(test_X, test_y, batch_size = 28)
+CNN.fit(train_X, train_y, batch_size = 32, validation_data = (test_X, test_y))
+
+loss = CNN.evaluate(test_X, test_y, batch_size = 32)
 
 print(loss)
