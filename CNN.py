@@ -12,8 +12,8 @@ plt.imshow(train_X[1], cmap = "Greys")
 CNN = ks.models.Sequential()
 
 # convolutional layer
-CNN.add(ks.layers.Conv2D(25, kernel_size=(3,3), strides=(1,1), padding='valid', activation='relu', input_shape=(32, 28,28,1)))
-CNN.add(ks.layers.MaxPool2D(pool_size=(1,1)))
+CNN.add(ks.layers.Conv2D(25, kernel_size=(3,3), strides=(1,1), padding='valid', activation='relu', input_shape=(28,28,1)))
+CNN.add(ks.layers.MaxPool2D(pool_size=(2,2)))
 # flatten output of conv
 CNN.add(ks.layers.Flatten())
 # hidden layer
